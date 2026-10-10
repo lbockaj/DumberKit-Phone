@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Ab" (Noto Sans Bold) for the jump-to-letter button in the main top bar -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M10.25 17.87 9.43 15.21H5.36L4.55 17.87H2L5.94 6.65H8.84L12.8 17.87ZM8.06 10.62Q7.98 10.36 7.85 9.95Q7.73 9.54 7.6 9.12Q7.48 8.7 7.4 8.38Q7.32 8.7 7.19 9.16Q7.05 9.62 6.94 10.04Q6.82 10.45 6.76 10.62L5.96 13.22H8.87ZM16.35 8.74Q16.35 9.23 16.32 9.7Q16.29 10.17 16.26 10.44H16.35Q16.69 9.9 17.27 9.54Q17.85 9.17 18.78 9.17Q20.22 9.17 21.11 10.29Q22 11.41 22 13.58Q22 15.77 21.09 16.9Q20.18 18.03 18.71 18.03Q17.77 18.03 17.23 17.69Q16.69 17.35 16.35 16.93H16.19L15.8 17.87H14.02V5.97H16.35ZM18.03 11.03Q17.12 11.03 16.75 11.59Q16.38 12.16 16.35 13.31V13.56Q16.35 14.8 16.72 15.47Q17.09 16.13 18.06 16.13Q18.78 16.13 19.2 15.47Q19.62 14.8 19.62 13.55Q19.62 12.3 19.19 11.66Q18.76 11.03 18.03 11.03Z" />
+</vector>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Keypad dialing: the typed number on top, the contacts matching it (number or T9 name) below -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialpad_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialpad_number"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dpad_dial_number_height"
+        android:ellipsize="start"
+        android:focusable="true"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:hint="@string/dpad_dial_hint"
+        android:maxLines="1"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:singleLine="true"
+        android:textSize="@dimen/dpad_dial_number_text_size" />
+
+    <TextView
+        android:id="@+id/dialpad_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:paddingBottom="@dimen/small_margin"
+        android:textSize="@dimen/dpad_dial_name_text_size"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/dialpad_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.2" />
+
+    <org.fossify.commons.views.MyRecyclerView
+        android:id="@+id/dialpad_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        android:visibility="gone"
+        app:layoutManager="org.fossify.commons.views.MyLinearLayoutManager" />
+
+    <TextView
+        android:id="@+id/dialpad_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:alpha="0.7"
+        android:gravity="center_horizontal"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingTop="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:text="@string/dpad_dial_help"
+        android:textSize="@dimen/dpad_dial_help_text_size" />
+</LinearLayout>

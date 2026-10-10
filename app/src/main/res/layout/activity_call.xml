@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Call screen for keypad phones: who is calling on top, then either the answer / decline pictograms (ringing, ← / →)
+  or the rows of the ongoing call (↑ / ↓ and OK)
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/call_holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/on_hold_status_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="@dimen/small_margin"
+        android:textSize="@dimen/dpad_call_small_text_size"
+        android:visibility="gone"
+        tools:text="On hold: John"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/call_incoming_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/medium_margin"
+        android:text="@string/dpad_incoming_call"
+        android:textSize="@dimen/dpad_call_small_text_size"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/caller_name_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingTop="@dimen/medium_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:textSize="@dimen/dpad_call_name_text_size"
+        tools:text="Caller name" />
+
+    <TextView
+        android:id="@+id/caller_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:textSize="@dimen/dpad_call_number_text_size"
+        tools:text="0912 345 678" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/small_margin">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin">
+
+            <ImageView
+                android:id="@+id/call_sim_image"
+                android:layout_width="@dimen/dpad_call_sim_size"
+                android:layout_height="@dimen/dpad_call_sim_size"
+                android:src="@drawable/ic_sim_vector"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/call_sim_id"
+                android:layout_width="@dimen/dpad_call_sim_size"
+                android:layout_height="@dimen/dpad_call_sim_size"
+                android:gravity="center"
+                android:textSize="@dimen/smaller_text_size"
+                android:visibility="gone"
+                tools:text="1" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/call_status_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dpad_call_status_text_size"
+            tools:text="00:42" />
+
+        <TextView
+            android:id="@+id/hold_status_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:text="@string/call_on_hold"
+            android:textSize="@dimen/dpad_call_status_text_size"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- the tones typed during the call (menus of automated lines) -->
+    <TextView
+        android:id="@+id/call_dtmf_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="start"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:textSize="@dimen/dpad_call_status_text_size"
+        android:visibility="gone"
+        tools:text="1 2 #"
+        tools:visibility="visible" />
+
+    <!-- the caller's photo (or a letter / person icon) in the free space between the name and the buttons -->
+    <FrameLayout
+        android:id="@+id/caller_avatar_holder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/caller_avatar"
+            android:layout_width="@dimen/dpad_call_avatar_size"
+            android:layout_height="@dimen/dpad_call_avatar_size"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:focusable="false"
+            android:scaleType="centerCrop" />
+    </FrameLayout>
+
+    <!--
+      ongoing (and outgoing) call: a row of round buttons, ← / → and OK (↑ / ↓ set the volume during calls);
+      the name and state of the selected one under them
+    -->
+    <LinearLayout
+        android:id="@+id/ongoing_call_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/big_margin"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <View
+            android:id="@+id/call_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/big_margin"
+            android:alpha="0.2" />
+
+        <LinearLayout
+            android:id="@+id/call_rows"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/small_margin"
+            android:paddingEnd="@dimen/small_margin">
+
+            <FrameLayout
+                android:id="@+id/call_toggle_speaker"
+                style="@style/DpadCallTile"
+                android:contentDescription="@string/dpad_speaker">
+
+                <ImageView
+                    android:id="@+id/call_toggle_speaker_icon"
+                    style="@style/DpadCallTileIcon"
+                    android:src="@drawable/ic_volume_up_vector" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/call_toggle_microphone"
+                style="@style/DpadCallTile"
+                android:contentDescription="@string/dpad_mute">
+
+                <ImageView
+                    android:id="@+id/call_toggle_microphone_icon"
+                    style="@style/DpadCallTileIcon"
+                    android:src="@drawable/ic_microphone_off_vector" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/call_toggle_hold"
+                style="@style/DpadCallTile"
+                android:contentDescription="@string/hold_call">
+
+                <ImageView
+                    android:id="@+id/call_toggle_hold_icon"
+                    style="@style/DpadCallTileIcon"
+                    android:src="@drawable/ic_pause_vector" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/call_add"
+                style="@style/DpadCallTile"
+                android:contentDescription="@string/call_add">
+
+                <ImageView
+                    android:id="@+id/call_add_icon"
+                    style="@style/DpadCallTileIcon"
+                    android:src="@drawable/ic_add_call_vector" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/call_swap"
+                style="@style/DpadCallTile"
+                android:visibility="gone"
+                android:contentDescription="@string/call_swap">
+
+                <ImageView
+                    android:id="@+id/call_swap_icon"
+                    style="@style/DpadCallTileIcon"
+                    android:src="@drawable/ic_call_swap_vector" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/call_merge"
+                style="@style/DpadCallTile"
+                android:visibility="gone"
+                android:contentDescription="@string/call_merge">
+
+                <ImageView
+                    android:id="@+id/call_merge_icon"
+                    style="@style/DpadCallTileIcon"
+                    android:src="@drawable/ic_call_merge_vector" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/call_manage"
+                style="@style/DpadCallTile"
+                android:visibility="gone"
+                android:contentDescription="@string/conference_manage">
+
+                <ImageView
+                    android:id="@+id/call_manage_icon"
+                    style="@style/DpadCallTileIcon"
+                    android:src="@drawable/ic_people_vector" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/call_end"
+                style="@style/DpadCallTile"
+                android:contentDescription="@string/dpad_hang_up">
+
+                <ImageView
+                    android:id="@+id/call_end_icon"
+                    style="@style/DpadCallTileIcon"
+                    android:src="@drawable/ic_phone_down_vector" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/call_action_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingStart="@dimen/activity_margin"
+            android:paddingTop="@dimen/medium_margin"
+            android:paddingEnd="@dimen/activity_margin"
+            android:textSize="@dimen/dpad_call_action_text_size"
+            tools:text="Speaker: Off" />
+    </LinearLayout>
+
+    <!-- ringing: answer ← · → decline -->
+    <LinearLayout
+        android:id="@+id/incoming_call_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/big_margin"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/activity_margin"
+            android:paddingEnd="@dimen/activity_margin">
+
+            <LinearLayout
+                android:id="@+id/call_accept"
+                android:layout_width="0dp"
+                android:focusable="false"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/call_accept_icon"
+                    android:layout_width="@dimen/dpad_call_pictogram_size"
+                    android:layout_height="@dimen/dpad_call_pictogram_size"
+                    android:contentDescription="@string/dpad_answer"
+                    android:src="@drawable/ic_phone_vector" />
+
+                <TextView
+                    android:id="@+id/call_accept_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/small_margin"
+                    android:text="@string/dpad_answer"
+                    android:textSize="@dimen/dpad_call_action_text_size" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/call_left_arrow"
+                android:layout_width="@dimen/dpad_call_arrow_size"
+                android:layout_height="@dimen/dpad_call_arrow_size"
+                android:alpha="0.6"
+                android:src="@drawable/ic_chevron_left_vector" />
+
+            <ImageView
+                android:id="@+id/call_right_arrow"
+                android:layout_width="@dimen/dpad_call_arrow_size"
+                android:layout_height="@dimen/dpad_call_arrow_size"
+                android:alpha="0.6"
+                android:src="@drawable/ic_chevron_right_vector" />
+
+            <LinearLayout
+                android:id="@+id/call_decline"
+                android:layout_width="0dp"
+                android:focusable="false"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/call_decline_icon"
+                    android:layout_width="@dimen/dpad_call_pictogram_size"
+                    android:layout_height="@dimen/dpad_call_pictogram_size"
+                    android:contentDescription="@string/dpad_decline"
+                    android:src="@drawable/ic_phone_down_vector" />
+
+                <TextView
+                    android:id="@+id/call_decline_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/small_margin"
+                    android:text="@string/dpad_decline"
+                    android:textSize="@dimen/dpad_call_action_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/call_silenced_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:gravity="center"
+            android:paddingTop="@dimen/big_margin"
+            android:text="@string/dpad_ringing_silenced"
+            android:textSize="@dimen/dpad_call_small_text_size"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

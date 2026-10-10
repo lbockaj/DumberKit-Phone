@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- settings -->
+    <string name="dpad_pick_color">Color</string>
+    <string name="dpad_pick_shade">Shade</string>
+    <!-- about -->
+    <string name="dpad_about_app_name" translatable="false">DumberKit Phone</string>
+    <string name="dpad_about_version">Version %s</string>
+    <string name="dpad_about_shortcuts">Keypad shortcuts</string>
+    <string name="dpad_about_license_title">License</string>
+    <string name="dpad_about_license">Free and open source software under the GNU General Public License v3.0. No ads, no tracking.</string>
+    <string name="dpad_about_description">A phone app for keypad phones like the Qin F21, Dumber Mini or Doov R77 Pro. Calling, call history, contacts and calls work with the D-pad and the keypad, no touchscreen needed.</string>
+    <string name="dpad_jump_to_letter">Jump to letter</string>
+    <string name="dpad_key_ok" translatable="false">OK</string>
+    <string name="dpad_key_up_down" translatable="false">↑ / ↓</string>
+    <string name="dpad_key_left_right" translatable="false">← / →</string>
+    <string name="dpad_key_left" translatable="false">←</string>
+    <string name="dpad_key_right" translatable="false">→</string>
+    <string name="dpad_key_digits" translatable="false">0–9</string>
+    <string name="dpad_key_star" translatable="false">*</string>
+    <string name="dpad_key_pound" translatable="false">#</string>
+    <string name="dpad_key_menu" translatable="false">Menu</string>
+    <string name="dpad_key_back">Back</string>
+    <string name="dpad_key_back_hold">Hold Back</string>
+    <string name="dpad_key_ok_hold">Hold OK</string>
+    <string name="dpad_key_call">Call (green)</string>
+    <string name="dpad_key_end">End (red)</string>
+    <string name="dpad_key_zero_hold">Hold 0</string>
+    <string name="dpad_key_digit_hold">Hold 2–9</string>
+    <string name="dpad_about_main">Call history, contacts, favorites</string>
+    <string name="dpad_key_main_left_right">Switch the tabs: call history, contacts, favorites</string>
+    <string name="dpad_key_main_digits">Start dialing a number</string>
+    <string name="dpad_key_main_ok">History: call back · Contacts: open the contact</string>
+    <string name="dpad_key_main_ok_hold">Actions: send SMS, favorites, edit, block, delete…</string>
+    <string name="dpad_key_main_call">Call the selected number or contact (nothing selected: dialing)</string>
+    <string name="dpad_key_main_pound">Send an SMS to the selected number or contact</string>
+    <string name="dpad_key_main_star">Jump to a letter</string>
+    <string name="dpad_key_main_up">On the first row: the top bar (jump to letter, search, menu)</string>
+    <string name="dpad_key_main_menu">Dialpad, new contact, sort, settings, about</string>
+    <string name="dpad_key_main_back">Jump to the first row; Back again leaves the app</string>
+    <string name="dpad_about_dialing">Dialing</string>
+    <string name="dpad_key_dial_digits">Type the number, matching contacts are listed below</string>
+    <string name="dpad_key_dial_call">Call the number (or the selected contact)</string>
+    <string name="dpad_key_dial_down">Pick one of the matching contacts</string>
+    <string name="dpad_key_dial_back">Delete the last digit; with nothing typed: close</string>
+    <string name="dpad_key_dial_back_hold">Delete the whole number</string>
+    <string name="dpad_key_dial_zero_hold">+ for international numbers</string>
+    <string name="dpad_key_dial_digit_hold">Speed dial</string>
+    <string name="dpad_key_dial_menu">Add to contacts, send SMS, pause, wait</string>
+    <string name="dpad_about_incoming">Incoming call</string>
+    <string name="dpad_key_incoming_answer">Answer (Call, OK or ←)</string>
+    <string name="dpad_key_incoming_decline">Decline (→)</string>
+    <string name="dpad_key_incoming_back">First press: silence the ringing · second press: hide the screen, the call keeps ringing silently</string>
+    <string name="dpad_about_ongoing">During a call</string>
+    <string name="dpad_key_ongoing_rows">Pick a button: speaker, mute, hold, add call, hang up</string>
+    <string name="dpad_key_ongoing_digits">Tones for menus of automated lines</string>
+    <string name="dpad_key_ongoing_end">Hang up (with the screen on and Android\'s \"Power button ends call\")</string>
+    <string name="dpad_answer">Answer</string>
+    <string name="dpad_decline">Decline</string>
+    <string name="dpad_incoming_call">Incoming call</string>
+    <string name="dpad_dial_hint">Number</string>
+    <string name="dpad_dial_help">Call key: call · Hold 0: + · Back: delete · Menu: more</string>
+    <string name="dpad_add_pause">Add a pause (,)</string>
+    <string name="dpad_add_wait">Add a wait (;)</string>
+    <string name="dpad_speaker">Speaker</string>
+    <string name="dpad_mute">Mute</string>
+    <string name="dpad_hang_up">Hang up</string>
+    <string name="dpad_on">On</string>
+    <string name="dpad_off">Off</string>
+    <string name="dpad_ringing_silenced">Silenced · Back again hides the screen</string>
+    <string name="dpad_key_incoming_red">Silence the ringing (Android does this with the red / power key)</string>
+    <string name="dpad_touch_input">Allow touch input</string>
+    <string name="dpad_screen_off_admin_description">Turns the screen off during a call (3 seconds after it starts, and with the green key), so the ear can\'t touch anything; this phone has no proximity sensor. The app uses no other admin rights.</string>
+    <string name="dpad_screen_off_setting">Turn the screen off during calls</string>
+    <string name="dpad_screen_off_question">This phone has no proximity sensor, so during a call the screen stays on at the ear and the ear can pull down the status bar. Allow the app to turn the screen off during calls (3 seconds after the call starts, and with the green key)? Android asks for \"device admin\" rights for this, only to lock the screen.</string>
+    <string name="dpad_key_ongoing_ok">Use the selected button</string>
+    <string name="dpad_key_ongoing_green">Turn the screen off (it also goes off 3 s after the call starts); green or Back turns it on</string>
+</resources>

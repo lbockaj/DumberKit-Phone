@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- old school push-button phone in the DumberKit style: a big handset over a solid body with the cradle and nine
+     keys cut out (white on the icon color, the same size as the other pictograms) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <group
+        android:pivotX="256"
+        android:pivotY="256"
+        android:scaleX="0.44"
+        android:scaleY="0.44"
+        android:translateY="-5">
+        <path
+            android:fillColor="#ffffff"
+            android:fillType="evenOdd"
+            android:pathData="M10,190Q0,120 50,80Q256,-10 462,80Q512,120 502,190Q500,210 478,210L400,210Q380,210 380,190L380,170Q256,120 132,170L132,190Q132,210 112,210L34,210Q12,210 10,190ZM150,235L150,205Q150,195 160,195L190,195Q200,195 200,205L200,235L312,235L312,205Q312,195 322,195L352,195Q362,195 362,205L362,235L392,235Q410,235 418,250L498,440Q506,460 502,480Q498,500 476,500L36,500Q14,500 10,480Q6,460 14,440L94,250Q102,235 120,235ZM164,306A26,26 0 1 1 216,306A26,26 0 1 1 164,306ZM230,306A26,26 0 1 1 282,306A26,26 0 1 1 230,306ZM296,306A26,26 0 1 1 348,306A26,26 0 1 1 296,306ZM164,368A26,26 0 1 1 216,368A26,26 0 1 1 164,368ZM230,368A26,26 0 1 1 282,368A26,26 0 1 1 230,368ZM296,368A26,26 0 1 1 348,368A26,26 0 1 1 296,368ZM164,430A26,26 0 1 1 216,430A26,26 0 1 1 164,430ZM230,430A26,26 0 1 1 282,430A26,26 0 1 1 230,430ZM296,430A26,26 0 1 1 348,430A26,26 0 1 1 296,430Z" />
+    </group>
+</vector>

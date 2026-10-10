@@ -1,0 +1,12 @@
+A phone app made for keypad phones – the Qin F21, Dumber Mini, Doov R77 Pro and other small Android phones with a D-pad and a T9 keypad. Dialing, the call history, contacts and the calls themselves work with the keys alone.
+
+<ul>
+<li><b>Call history first</b> – the app opens on your last calls, the green key calls back.</li>
+<li><b>Dial straight away</b> – any digit starts dialing, contacts matching the number or the T9 name are listed below.</li>
+<li><b>Contacts like DumberKit Contacts</b> – jump to a letter, search, actions on a held OK.</li>
+<li><b>Calls for keys</b> – answer with the green key, OK or ←, decline with →; during a call a row of buttons for ← / → (the arrows ↑ / ↓ are the volume).</li>
+<li><b>Screen off at the ear</b> – keypad phones have no proximity sensor, the app turns the screen off 3 seconds after the call connects.</li>
+<li><b>No touch needed</b> – no floating buttons, no swiping, sized for 480×640.</li>
+</ul>
+
+Based on Fossify Phone. Free and open source, no ads, no tracking.

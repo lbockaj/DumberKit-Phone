@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/main_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dpad_toolbar_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dpad_toolbar_padding"
+            android:paddingEnd="@dimen/dpad_toolbar_padding">
+
+            <TextView
+                android:id="@+id/main_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:focusable="false"
+                android:maxLines="1"
+                android:paddingStart="@dimen/small_margin"
+                android:text="@string/app_launcher_name"
+                android:textSize="@dimen/dpad_title_text_size"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/main_letters"
+                style="@style/DpadToolbarButton"
+                android:contentDescription="@string/dpad_jump_to_letter"
+                android:nextFocusLeft="@+id/main_more"
+                android:nextFocusRight="@+id/main_search"
+                android:src="@drawable/ic_dpad_letters_vector" />
+
+            <ImageButton
+                android:id="@+id/main_search"
+                style="@style/DpadToolbarButton"
+                android:contentDescription="@string/search"
+                android:nextFocusLeft="@+id/main_letters"
+                android:nextFocusRight="@+id/main_more"
+                android:src="@drawable/ic_search_vector" />
+
+            <ImageButton
+                android:id="@+id/main_more"
+                style="@style/DpadToolbarButton"
+                android:contentDescription="@string/more_info"
+                android:nextFocusLeft="@+id/main_search"
+                android:nextFocusRight="@+id/main_letters"
+                android:src="@drawable/ic_three_dots_vector" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dpad_toolbar_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dpad_toolbar_padding"
+            android:paddingEnd="@dimen/dpad_toolbar_padding"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/main_search_close"
+                style="@style/DpadToolbarButton"
+                android:contentDescription="@string/back"
+                android:nextFocusRight="@+id/main_search_input"
+                android:src="@drawable/ic_arrow_left_vector" />
+
+            <EditText
+                android:id="@+id/main_search_input"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/search"
+                android:imeOptions="flagNoExtractUi|actionSearch"
+                android:inputType="textVisiblePassword|textNoSuggestions"
+                android:maxLines="1"
+                android:nextFocusLeft="@+id/main_search_close"
+                android:paddingStart="@dimen/small_margin"
+                android:paddingEnd="@dimen/small_margin"
+                android:singleLine="true"
+                android:textSize="@dimen/dpad_search_text_size" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_holder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <org.fossify.commons.views.MyViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:descendantFocusability="afterDescendants"
+            app:layout_constraintBottom_toTopOf="@+id/main_tabs_holder"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/main_tabs_holder"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dpad_tabs_height"
+            android:descendantFocusability="blocksDescendants"
+            android:focusable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tabIndicator="@null"
+            app:tabRippleColor="@null" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
