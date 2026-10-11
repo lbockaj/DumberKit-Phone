@@ -92,7 +92,7 @@ class MainActivity : SimpleActivity() {
     var cachedContacts = ArrayList<Contact>()
 
     private val isSearchOpen get() = binding.mainSearchBar.visibility == View.VISIBLE
-    private val toolbarButtons get() = listOf(binding.mainLetters, binding.mainSearch, binding.mainMore)
+    private val toolbarButtons get() = listOf(binding.mainLetters, binding.mainSearch, binding.mainDialpad, binding.mainMore)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,9 +120,12 @@ class MainActivity : SimpleActivity() {
         setupTabs()
         Contact.sorting = config.sorting
 
-        // until the first call is there the pager holds the focus (no frame), not "Ab"
+        // until the first call is there the pager holds the focus (no frame); the top bar is out of reach meanwhile,
+        // Android would otherwise give the focus to "Ab" while the list is still empty
+        toolbarButtons.forEach { it.isFocusable = false }
         binding.viewPager.isFocusable = true
         binding.viewPager.defaultFocusHighlightEnabled = false
+        binding.viewPager.descendantFocusability = ViewGroup.FOCUS_BEFORE_DESCENDANTS
         binding.viewPager.requestFocus()
         focusListAtStart()
     }
@@ -288,6 +291,7 @@ class MainActivity : SimpleActivity() {
 
         binding.mainSearch.setOnClickListener { openSearch() }
         binding.mainLetters.setOnClickListener { showLetterDialog() }
+        binding.mainDialpad.setOnClickListener { launchDialpad() }
         binding.mainMore.setOnClickListener { showMoreMenu() }
         binding.mainSearchClose.setOnClickListener { closeSearch() }
 
@@ -325,7 +329,8 @@ class MainActivity : SimpleActivity() {
     private fun refreshMenuItems(menu: Menu) {
         val currentFragment = getCurrentFragment()
         menu.apply {
-            findItem(R.id.dpad_dialpad).isVisible = true
+            // the dialpad has its own button in the top bar
+            findItem(R.id.dpad_dialpad).isVisible = false
             findItem(R.id.clear_call_history).isVisible = currentFragment is RecentsFragment
             findItem(R.id.sort).isVisible = currentFragment !is RecentsFragment
             findItem(R.id.filter).isVisible = currentFragment !is RecentsFragment
@@ -1083,19 +1088,27 @@ class MainActivity : SimpleActivity() {
 
             val fragment = getCurrentFragment()
             val list = fragment?.getListView()
-            if (fragment != null && list != null && list.isShown && (list.adapter?.itemCount ?: 0) > 0 &&
-                fragment.focusContent(fragment.firstItemPosition())
-            ) {
-                focusListOnStart = false
-                binding.viewPager.isFocusable = false
+            // only a row that is really laid out counts, the top bar comes back once it has the focus
+            val row = if (list != null && list.isShown) list.findViewHolderForAdapterPosition(fragment.firstItemPosition())?.itemView else null
+            if (row != null) {
+                row.requestFocus()
+                startFocusDone()
             } else if (attemptsLeft > 0) {
                 focusListAtStart(attemptsLeft - 1)
             } else {
-                focusListOnStart = false
-                binding.viewPager.isFocusable = false
-                fragment?.focusContent() ?: focusTopBar()
+                startFocusDone()
+                if (fragment?.focusContent() != true) {
+                    focusTopBar()
+                }
             }
         }, 50)
+    }
+
+    private fun startFocusDone() {
+        focusListOnStart = false
+        toolbarButtons.forEach { it.isFocusable = true }
+        binding.viewPager.descendantFocusability = ViewGroup.FOCUS_AFTER_DESCENDANTS
+        binding.viewPager.isFocusable = false
     }
 
     private fun getAllFragments(): List<MyViewPagerFragment<*>?> = visibleTabs(config.showTabs).map {

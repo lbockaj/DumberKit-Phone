@@ -23,8 +23,8 @@
     <string name="dpad_key_main_call">Zavolá vybrané číslo alebo kontakt (keď nie je nič vybrané: vytáčanie)</string>
     <string name="dpad_key_main_pound">Pošle SMS na vybrané číslo alebo kontakt</string>
     <string name="dpad_key_main_star">Prejsť na písmeno</string>
-    <string name="dpad_key_main_up">Na prvom riadku: horný panel (písmeno, hľadať, menu)</string>
-    <string name="dpad_key_main_menu">Číselník, nový kontakt, triedenie, nastavenia, o aplikácii</string>
+    <string name="dpad_key_main_up">Na prvom riadku: horný panel (písmeno, hľadať, číselník, menu)</string>
+    <string name="dpad_key_main_menu">Nový kontakt, triedenie, vymazať históriu, nastavenia, o aplikácii</string>
     <string name="dpad_key_main_back">Skočí na prvý riadok; ďalšie Späť zavrie aplikáciu</string>
     <string name="dpad_about_dialing">Vytáčanie</string>
     <string name="dpad_key_dial_digits">Píše číslo, pod ním sa zobrazujú zhodné kontakty</string>
@@ -46,8 +46,6 @@
     <string name="dpad_answer">Prijať</string>
     <string name="dpad_decline">Odmietnuť</string>
     <string name="dpad_incoming_call">Prichádzajúci hovor</string>
-    <string name="dpad_dial_hint">Číslo</string>
-    <string name="dpad_dial_help">Zelené: zavolať · Podržať 0: + · Späť: zmazať · Menu: viac</string>
     <string name="dpad_add_pause">Pridať pauzu (,)</string>
     <string name="dpad_add_wait">Pridať čakanie (;)</string>
     <string name="dpad_speaker">Reproduktor</string>

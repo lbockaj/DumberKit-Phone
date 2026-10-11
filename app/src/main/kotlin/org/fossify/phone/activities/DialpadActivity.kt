@@ -1,6 +1,13 @@
 package org.fossify.phone.activities
 
 import android.content.Intent
+import org.fossify.commons.extensions.getProperPrimaryColor
+import org.fossify.commons.extensions.applyColorFilter
+import android.text.style.ForegroundColorSpan
+import android.text.SpannableStringBuilder
+import android.os.Looper
+import android.os.Handler
+import android.graphics.Color
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -11,7 +18,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.fossify.commons.extensions.adjustAlpha
 import org.fossify.commons.extensions.beVisibleIf
 import org.fossify.commons.extensions.checkAppSideloading
 import org.fossify.commons.extensions.getMyContactsCursor
@@ -47,6 +53,9 @@ import java.util.Locale
  * Dialing with the phone's keypad: the digits type the number (no on-screen dialpad, no keyboard), the contacts
  * whose number or T9 name matches it are listed below. Call (or OK) calls, Back deletes, hold 0 types +.
  */
+private const val CURSOR = "|"
+private const val CURSOR_BLINK_MS = 530L
+
 class DialpadActivity : SimpleActivity() {
     private val binding by viewBinding(ActivityDialpadBinding::inflate)
 
@@ -58,6 +67,8 @@ class DialpadActivity : SimpleActivity() {
     private var backLongPressed = false
     private var digitLongPressed = false
     private var callStarted = false
+    private val cursorHandler = Handler(Looper.getMainLooper())
+    private var cursorShown = true
 
     private var hasRussianLocale = false
     private val russianCharsMap by lazy {
@@ -88,7 +99,9 @@ class DialpadActivity : SimpleActivity() {
         toneGeneratorHelper = ToneGeneratorHelper(this, DIALPAD_TONE_LENGTH_MS)
 
         // the typed number holds the focus, ↓ moves into the matching contacts
-        binding.dialpadNumber.requestFocus()
+        binding.dialpadNumber.requestFocusFromTouch()
+        // the cursor shows only while the keys type into the number
+        binding.dialpadNumber.setOnFocusChangeListener { _, _ -> showNumber() }
         checkDialIntent()
         showNumber()
 
@@ -102,9 +115,10 @@ class DialpadActivity : SimpleActivity() {
         val textColor = getProperTextColor()
         binding.dialpadHolder.setBackgroundColor(getProperBackgroundColor())
         updateTextColors(binding.dialpadHolder)
-        binding.dialpadNumber.setHintTextColor(textColor.adjustAlpha(0.4f))
         binding.dialpadDivider.setBackgroundColor(textColor)
-        listOf(binding.dialpadNumber, binding.dialpadName, binding.dialpadPlaceholder).forEach { it.setTextColor(textColor) }
+        listOf(binding.dialpadNumber, binding.dialpadName).forEach { it.setTextColor(textColor) }
+        binding.dialpadNumberIcon.applyColorFilter(getProperPrimaryColor())
+        restartCursorBlink()
         window.statusBarColor = getProperBackgroundColor()
     }
 
@@ -353,12 +367,39 @@ class DialpadActivity : SimpleActivity() {
         runOnUiThread { numberChanged() }
     }
 
+    override fun onPause() {
+        super.onPause()
+        cursorHandler.removeCallbacksAndMessages(null)
+    }
+
+    /**
+     * The number with a blinking cursor after it, so it's clear the keys type into it; while a contact below is picked
+     * the cursor is hidden. The hidden cursor stays as an invisible character, so the number doesn't move.
+     */
     private fun showNumber() {
-        binding.dialpadNumber.text = number
+        val contactPicked = currentFocus?.let { binding.dialpadList.findContainingItemView(it) } != null
+        val cursorColor = if (!contactPicked && cursorShown) getProperPrimaryColor() else Color.TRANSPARENT
+        binding.dialpadNumber.text = SpannableStringBuilder(number).append(CURSOR, ForegroundColorSpan(cursorColor), 0)
+    }
+
+    /** Typing keeps the cursor on, it starts blinking again after a pause. */
+    private fun restartCursorBlink() {
+        cursorHandler.removeCallbacksAndMessages(null)
+        cursorShown = true
+        showNumber()
+        cursorHandler.postDelayed(blinkCursor, CURSOR_BLINK_MS)
+    }
+
+    private val blinkCursor = object : Runnable {
+        override fun run() {
+            cursorShown = !cursorShown
+            showNumber()
+            cursorHandler.postDelayed(this, CURSOR_BLINK_MS)
+        }
     }
 
     private fun numberChanged() {
-        showNumber()
+        restartCursorBlink()
         // typing goes on in the number even when a contact below was picked
         if (!binding.dialpadNumber.isFocused) {
             binding.dialpadNumber.requestFocus()
@@ -419,7 +460,6 @@ class DialpadActivity : SimpleActivity() {
             adapter.updateItems(filtered, text)
         }
 
-        binding.dialpadPlaceholder.beVisibleIf(filtered.isEmpty())
         binding.dialpadList.beVisibleIf(filtered.isNotEmpty())
     }
 

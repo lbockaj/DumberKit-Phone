@@ -41,9 +41,6 @@ abstract class MyViewPagerFragment<BINDING : MyViewPagerFragment.InnerBinding>(c
             // no floating button to leave room for
             getListView()?.apply {
                 setPadding(paddingLeft, paddingTop, paddingRight, 0)
-                // the app puts the focus on rows itself (first row on a tab switch); the list's own recovery of the
-                // last focused row after a layout pulled the focus back down to it
-                preserveFocusAfterLayout = false
             }
 
             setupFragment()

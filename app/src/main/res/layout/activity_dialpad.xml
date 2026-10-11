@@ -7,20 +7,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/dialpad_number"
+    <!-- the number row: a handset on the left, the typed number with a blinking cursor after it -->
+    <LinearLayout
+        android:id="@+id/dialpad_number_row"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dpad_dial_number_height"
-        android:ellipsize="start"
-        android:focusable="true"
-        android:focusableInTouchMode="false"
-        android:gravity="center"
-        android:hint="@string/dpad_dial_hint"
-        android:maxLines="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="@dimen/activity_margin"
-        android:paddingEnd="@dimen/activity_margin"
-        android:singleLine="true"
-        android:textSize="@dimen/dpad_dial_number_text_size" />
+        android:paddingEnd="@dimen/activity_margin">
+
+        <ImageView
+            android:id="@+id/dialpad_number_icon"
+            android:layout_width="@dimen/dpad_dial_icon_size"
+            android:layout_height="@dimen/dpad_dial_icon_size"
+            android:layout_marginEnd="@dimen/activity_margin"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_phone_vector" />
+
+        <TextView
+            android:id="@+id/dialpad_number"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:defaultFocusHighlightEnabled="false"
+            android:ellipsize="start"
+            android:focusable="true"
+            android:focusableInTouchMode="false"
+            android:gravity="center_vertical|start"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="@dimen/dpad_dial_number_text_size" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/dialpad_name"
@@ -51,16 +69,4 @@
         android:visibility="gone"
         app:layoutManager="org.fossify.commons.views.MyLinearLayoutManager" />
 
-    <TextView
-        android:id="@+id/dialpad_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:alpha="0.7"
-        android:gravity="center_horizontal"
-        android:paddingStart="@dimen/activity_margin"
-        android:paddingTop="@dimen/activity_margin"
-        android:paddingEnd="@dimen/activity_margin"
-        android:text="@string/dpad_dial_help"
-        android:textSize="@dimen/dpad_dial_help_text_size" />
 </LinearLayout>

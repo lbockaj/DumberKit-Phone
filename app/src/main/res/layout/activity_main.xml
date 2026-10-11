@@ -47,14 +47,23 @@
                 style="@style/DpadToolbarButton"
                 android:contentDescription="@string/search"
                 android:nextFocusLeft="@+id/main_letters"
-                android:nextFocusRight="@+id/main_more"
+                android:nextFocusRight="@+id/main_dialpad"
                 android:src="@drawable/ic_search_vector" />
+
+            <ImageButton
+                android:id="@+id/main_dialpad"
+                style="@style/DpadToolbarButton"
+                android:padding="@dimen/dpad_toolbar_dialpad_padding"
+                android:contentDescription="@string/dialpad"
+                android:nextFocusLeft="@+id/main_search"
+                android:nextFocusRight="@+id/main_more"
+                android:src="@drawable/ic_dialpad_vector" />
 
             <ImageButton
                 android:id="@+id/main_more"
                 style="@style/DpadToolbarButton"
                 android:contentDescription="@string/more_info"
-                android:nextFocusLeft="@+id/main_search"
+                android:nextFocusLeft="@+id/main_dialpad"
                 android:nextFocusRight="@+id/main_letters"
                 android:src="@drawable/ic_three_dots_vector" />
         </LinearLayout>

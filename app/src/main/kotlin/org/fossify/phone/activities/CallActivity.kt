@@ -542,40 +542,21 @@ class CallActivity : SimpleActivity() {
         }
     }
 
-    /**
-     * The contact's photo in a circle; without one the colored letter circle of the contact lists, for an unknown
-     * number or a conference a person icon.
-     */
+    /** Only a real contact photo is shown, in a circle; without one (or for a conference) the middle stays empty. */
     private fun updateCallerAvatar(contact: CallContact, isConference: Boolean) {
         if (isFinishing || isDestroyed) {
             return
         }
 
         val avatar = binding.callerAvatar
-        val isKnown = contact.name.isNotEmpty() && contact.name != contact.number
-        avatar.background = null
-        avatar.setPadding(0, 0, 0, 0)
-        avatar.clearColorFilter()
-        when {
-            !isConference && contact.photoUri.isNotEmpty() -> {
-                Glide.with(this)
-                    .load(contact.photoUri)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(avatar)
-            }
-
-            !isConference && isKnown -> avatar.setImageBitmap(SimpleContactsHelper(this).getContactLetterIcon(contact.name))
-            else -> {
-                val color = getProperPrimaryColor()
-                avatar.background = GradientDrawable().apply {
-                    shape = GradientDrawable.OVAL
-                    setColor(color)
-                }
-                avatar.setImageResource(if (isConference) R.drawable.ic_people_vector else R.drawable.ic_person_vector)
-                avatar.applyColorFilter(color.getContrastColor())
-                val padding = resources.getDimensionPixelSize(org.fossify.commons.R.dimen.big_margin)
-                avatar.setPadding(padding, padding, padding, padding)
-            }
+        if (!isConference && contact.photoUri.isNotEmpty()) {
+            avatar.beVisible()
+            Glide.with(this)
+                .load(contact.photoUri)
+                .apply(RequestOptions.circleCropTransform())
+                .into(avatar)
+        } else {
+            avatar.beGone()
         }
     }
 

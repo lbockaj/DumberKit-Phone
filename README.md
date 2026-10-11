@@ -36,8 +36,8 @@ starts at its first row.
 | **Hold OK** | Actions: call, send SMS, add to / remove from favorites, edit, block, delete… |
 | **#** | Send an SMS to the selected number or contact |
 | **\*** or the **Ab** button | Jump to a letter in the contacts (A–Z grid, the keys 2–9 jump like on the keypad) |
-| **↑** on the first row | The top bar: jump to letter, search, menu |
-| **Menu** | Dialpad, new contact, sort, filter, clear the call history, settings, about |
+| **↑** on the first row | The top bar: jump to letter, search, dialpad, menu |
+| **Menu** | New contact, sort, filter, clear the call history, settings, about |
 | **Back** | Jump to the first row; Back again leaves the app |
 
 Search, **Ab** and **\*** always look for contacts. Started from the call history, the history stays on screen while
@@ -45,7 +45,7 @@ you type or pick a letter, and the contacts show up once you confirm with **OK**
 
 ### Dialing
 
-The digits type the number into a big field on top, the contacts whose number or name matches it (T9, so 62 finds
+The digits type the number into a big field on top, next to a handset and with a blinking cursor; the contacts whose number or name matches it (T9, so 62 finds
 *Ma*ma and *Ma*rtin) are listed below. No on-screen dialpad and no keyboard get in the way.
 
 | Key | What it does |
@@ -69,8 +69,7 @@ The digits type the number into a big field on top, the contacts whose number or
 
 ### Incoming call
 
-The caller's photo (or the colored letter from the contact lists) sits in the middle, *Answer* on the left and
-*Decline* on the right.
+A contact's photo (when the contact has one) sits in the middle, *Answer* on the left and *Decline* on the right.
 
 | Key | What it does |
 | --- | --- |

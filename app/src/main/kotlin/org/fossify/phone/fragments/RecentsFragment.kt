@@ -1,9 +1,6 @@
 package org.fossify.phone.fragments
 
 import android.content.Context
-import java.io.File
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.json.Json
 import android.util.AttributeSet
 import org.fossify.commons.extensions.baseConfig
 import org.fossify.commons.extensions.beGone
@@ -29,13 +26,11 @@ import org.fossify.phone.extensions.runAfterAnimations
 import org.fossify.phone.extensions.startAddContactIntent
 import org.fossify.phone.extensions.startCallWithConfirmationCheck
 import org.fossify.phone.extensions.startContactDetailsIntent
+import org.fossify.phone.helpers.RecentsCache
 import org.fossify.phone.helpers.RecentsHelper
 import org.fossify.phone.interfaces.RefreshItemsListener
 import org.fossify.phone.models.CallLogItem
 import org.fossify.phone.models.RecentCall
-
-private const val RECENTS_CACHE_FILE = "dumberkit_recent_calls.json"
-private const val RECENTS_CACHE_SIZE = 40
 
 class RecentsFragment(
     context: Context, attributeSet: AttributeSet,
@@ -236,37 +231,20 @@ class RecentsFragment(
         recentsAdapter?.apply { notifyItemRangeChanged(0, itemCount) }
     }
 
-    private val cacheFile get() = File(context.cacheDir, RECENTS_CACHE_FILE)
-    private val cacheJson = Json { ignoreUnknownKeys = true }
-
-    /**
-     * The calls shown at the last start, right away at the next one (reading the call log and the contacts takes a
-     * moment); the fresh list replaces them shortly after.
-     */
+    /** The calls shown at the last start, right away (see RecentsCache); the fresh list replaces them shortly after. */
     private fun showCachedCalls() {
         if (!context.hasPermission(PERMISSION_READ_CALL_LOG) || allRecentCalls.isNotEmpty()) {
             return
         }
 
-        val calls = try {
-            cacheJson.decodeFromString(ListSerializer(RecentCall.serializer()), cacheFile.readText())
-        } catch (e: Exception) {
-            return
-        }
-
+        val calls = RecentsCache.take(context)
         if (calls.isNotEmpty()) {
             gotRecents(groupCallsByDate(calls))
         }
     }
 
     private fun saveCachedCalls(items: List<CallLogItem>) {
-        ensureBackgroundThread {
-            try {
-                val calls = items.filterIsInstance<RecentCall>().take(RECENTS_CACHE_SIZE)
-                cacheFile.writeText(cacheJson.encodeToString(ListSerializer(RecentCall.serializer()), calls))
-            } catch (ignored: Exception) {
-            }
-        }
+        RecentsCache.save(context, items.filterIsInstance<RecentCall>())
     }
 
     private fun getRecentCalls(loadAll: Boolean, onCallsRead: (List<RecentCall>) -> Unit = {}, callback: (List<CallLogItem>) -> Unit) {

@@ -35,8 +35,8 @@
     <string name="dpad_key_main_call">Call the selected number or contact (nothing selected: dialing)</string>
     <string name="dpad_key_main_pound">Send an SMS to the selected number or contact</string>
     <string name="dpad_key_main_star">Jump to a letter</string>
-    <string name="dpad_key_main_up">On the first row: the top bar (jump to letter, search, menu)</string>
-    <string name="dpad_key_main_menu">Dialpad, new contact, sort, settings, about</string>
+    <string name="dpad_key_main_up">On the first row: the top bar (jump to letter, search, dialpad, menu)</string>
+    <string name="dpad_key_main_menu">New contact, sort, clear the call history, settings, about</string>
     <string name="dpad_key_main_back">Jump to the first row; Back again leaves the app</string>
     <string name="dpad_about_dialing">Dialing</string>
     <string name="dpad_key_dial_digits">Type the number, matching contacts are listed below</string>
@@ -58,8 +58,6 @@
     <string name="dpad_answer">Answer</string>
     <string name="dpad_decline">Decline</string>
     <string name="dpad_incoming_call">Incoming call</string>
-    <string name="dpad_dial_hint">Number</string>
-    <string name="dpad_dial_help">Call key: call · Hold 0: + · Back: delete · Menu: more</string>
     <string name="dpad_add_pause">Add a pause (,)</string>
     <string name="dpad_add_wait">Add a wait (;)</string>
     <string name="dpad_speaker">Speaker</string>

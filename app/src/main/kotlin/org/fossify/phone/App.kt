@@ -1,6 +1,13 @@
 package org.fossify.phone
 
 import android.app.Activity
+import org.fossify.commons.extensions.hasPermission
+import org.fossify.commons.helpers.PERMISSION_READ_CALL_LOG
+import org.fossify.phone.helpers.RecentsCache
+import com.bumptech.glide.Glide
+import com.google.i18n.phonenumbers.PhoneNumberUtil
+import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder
+import org.fossify.commons.helpers.ensureBackgroundThread
 import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -44,6 +51,10 @@ class App : FossifyApp() {
         useSystemThemeByDefault()
         openContactOnClickByDefault()
         syncLauncherIconColor()
+        warmUpLibraries()
+        if (hasPermission(PERMISSION_READ_CALL_LOG)) {
+            RecentsCache.preload(this)
+        }
         // Commons calls any build without one of its unused images (removed by the release shrinker) a "fake version"
         // and sends people to its website; this app is built from its own source on purpose
         baseConfig.appSideloadingStatus = SIDELOADING_FALSE
@@ -209,6 +220,21 @@ class App : FossifyApp() {
         val prefs = getSharedPreferences(PREFS_KEY, MODE_PRIVATE)
         if (!prefs.contains(ON_CONTACT_CLICK_KEY)) {
             baseConfig.onContactClick = ON_CLICK_VIEW_CONTACT
+        }
+    }
+
+    /**
+     * The phone number library (a big metadata load, used for the country of foreign numbers in the call history) and
+     * the image loader start up in the background right away, not while the first rows of the history are drawn.
+     */
+    private fun warmUpLibraries() {
+        ensureBackgroundThread {
+            try {
+                PhoneNumberUtil.getInstance().parse("+421900000000", "SK")
+                PhoneNumberOfflineGeocoder.getInstance()
+                Glide.get(this)
+            } catch (ignored: Exception) {
+            }
         }
     }
 
