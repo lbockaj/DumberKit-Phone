@@ -1,5 +1,10 @@
 package org.fossify.phone.activities
 
+import org.fossify.commons.helpers.APP_ICON_IDS
+import org.fossify.commons.helpers.APP_LAUNCHER_NAME
+
+import org.fossify.phone.extensions.hasProximitySensor
+
 import org.fossify.commons.extensions.beGone
 
 import org.fossify.phone.helpers.dpadCompactTopBar
@@ -175,7 +180,7 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupCustomizeColors() {
         binding.settingsColorCustomizationHolder.setOnClickListener {
-            startCustomizationActivity()
+            openColorCustomization()
         }
     }
 
@@ -325,6 +330,8 @@ class SettingsActivity : SimpleActivity() {
     /** The display off during calls needs Android's device admin (only "lock the screen"); off removes it again. */
     private fun setupScreenOff() {
         binding.apply {
+            // only phones without a proximity sensor need it, the sensor turns the display off at the ear by itself
+            settingsScreenOffHolder.beVisibleIf(!hasProximitySensor())
             settingsScreenOff.isChecked = ScreenOffAdminReceiver.isActive(this@SettingsActivity)
             settingsScreenOffHolder.setOnClickListener {
                 if (ScreenOffAdminReceiver.isActive(this@SettingsActivity)) {
@@ -533,6 +540,18 @@ class SettingsActivity : SimpleActivity() {
             if (focused == null || focused == settingsNestedScrollview || !focused.isShown) {
                 settingsColorCustomizationHolder.requestFocusFromTouch()
             }
+        }
+    }
+
+    /**
+     * Like Commons' startCustomizationActivity, which stops opening for apps with another package name than its own
+     * (after 100 runs it only shows a "fake version" note).
+     */
+    private fun openColorCustomization() {
+        Intent(applicationContext, org.fossify.commons.activities.CustomizationActivity::class.java).apply {
+            putExtra(APP_ICON_IDS, getAppIconIDs())
+            putExtra(APP_LAUNCHER_NAME, getAppLauncherName())
+            startActivity(this)
         }
     }
 }

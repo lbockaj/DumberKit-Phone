@@ -213,6 +213,19 @@ class FavoritesFragment(context: Context, attributeSet: AttributeSet) : MyViewPa
     private fun setViewType(viewType: Int) {
         val spanCount = context.config.contactsGridColumnCount
 
+        // the same layout already: a new layout manager would rebuild the whole list, and the selected contact lost
+        // the focus for a moment ("Ab" blinked, e.g. back from a call)
+        val current = binding.fragmentList.layoutManager
+        val unchanged = if (viewType == VIEW_TYPE_GRID) {
+            current is MyGridLayoutManager && current.spanCount == spanCount
+        } else {
+            current is MyLinearLayoutManager
+        }
+        if (unchanged) {
+            binding.letterFastscroller.beGone()
+            return
+        }
+
         val layoutManager = if (viewType == VIEW_TYPE_GRID) {
             binding.letterFastscroller.beGone()
             MyGridLayoutManager(context, spanCount)

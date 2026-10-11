@@ -7,6 +7,8 @@ import android.app.role.RoleManager
 import android.content.Context
 import android.content.Context.KEYGUARD_SERVICE
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import android.media.AudioManager
 import android.net.Uri
 import android.os.PowerManager
@@ -109,4 +111,13 @@ fun Context.isOwnDefaultDialer(): Boolean {
     } else {
         (getSystemService(Context.TELECOM_SERVICE) as TelecomManager).defaultDialerPackage == packageName
     }
+}
+
+/**
+ * A real proximity sensor turns the display off at the ear during calls by itself (the proximity wake lock); only
+ * phones without one need the app to switch the display off (device admin, see ScreenOffAdminReceiver).
+ */
+fun Context.hasProximitySensor(): Boolean {
+    val sensorManager = getSystemService(Context.SENSOR_SERVICE) as? SensorManager ?: return false
+    return sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY) != null
 }

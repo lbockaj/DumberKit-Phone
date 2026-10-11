@@ -1,5 +1,7 @@
 package org.fossify.phone.activities
 
+import org.fossify.phone.extensions.hasProximitySensor
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -88,6 +90,7 @@ class MainActivity : SimpleActivity() {
     private var storedStartNameWithSurname = false
     private var focusListOnStart = true
     private var isFirstResume = true
+    private var appliedListColors: Pair<Int, Int>? = null
     private var allowLeavingList = false
     var cachedContacts = ArrayList<Contact>()
 
@@ -149,8 +152,14 @@ class MainActivity : SimpleActivity() {
         binding.mainTabsHolder.background = ColorDrawable(getProperBackgroundColor())
         setupTabColors()
 
-        getAllFragments().forEach {
-            it?.setupColors(getProperTextColor(), getProperPrimaryColor(), getProperPrimaryColor())
+        // only when the colors really changed: setting them redraws the contact lists from scratch, the selected
+        // contact lost the focus for a moment and "Ab" blinked (e.g. back from a call)
+        val colors = getProperTextColor() to getProperPrimaryColor()
+        if (colors != appliedListColors) {
+            appliedListColors = colors
+            getAllFragments().forEach {
+                it?.setupColors(colors.first, colors.second, colors.second)
+            }
         }
 
         val configStartNameWithSurname = config.startNameWithSurname
@@ -268,7 +277,7 @@ class MainActivity : SimpleActivity() {
 
     /** Once: the call screen may turn the display off (no proximity sensor on keypad phones), see ScreenOffAdminReceiver. */
     private fun askForScreenOff() {
-        if (config.dpadScreenOffAsked || ScreenOffAdminReceiver.isActive(this)) {
+        if (config.dpadScreenOffAsked || ScreenOffAdminReceiver.isActive(this) || hasProximitySensor()) {
             return
         }
 

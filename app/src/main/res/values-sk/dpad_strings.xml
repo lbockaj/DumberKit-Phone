@@ -56,9 +56,9 @@
     <string name="dpad_ringing_silenced">Stíšené · ďalšie Späť skryje obrazovku</string>
     <string name="dpad_key_incoming_red">Stíši zvonenie (červené je zároveň vypínač, tak to robí Android)</string>
     <string name="dpad_touch_input">Povoliť dotykové ovládanie</string>
-    <string name="dpad_screen_off_admin_description">Počas hovoru vypne displej (3 sekundy po spojení a zeleným tlačidlom), aby sa uchom nedalo nič stlačiť; telefón nemá senzor priblíženia. Iné práva správcu aplikácia nepoužíva.</string>
+    <string name="dpad_screen_off_admin_description">Počas hovoru vypne displej (2 sekundy po začatí hovoru a zeleným tlačidlom), aby sa uchom nedalo nič stlačiť; telefón nemá senzor priblíženia. Iné práva správcu aplikácia nepoužíva.</string>
     <string name="dpad_screen_off_setting">Vypínať displej počas hovoru</string>
-    <string name="dpad_screen_off_question">Telefón nemá senzor priblíženia, takže počas hovoru ostáva displej pri uchu zapnutý a uchom sa dá vytiahnuť horná lišta. Povoliť aplikácii vypínať displej počas hovoru (3 sekundy po spojení a zeleným tlačidlom)? Android na to pýta práva „správcu zariadenia“, použijú sa len na zamknutie obrazovky.</string>
+    <string name="dpad_screen_off_question">Telefón nemá senzor priblíženia, takže počas hovoru ostáva displej pri uchu zapnutý a uchom sa dá vytiahnuť horná lišta. Povoliť aplikácii vypínať displej počas hovoru (2 sekundy po začatí hovoru a zeleným tlačidlom)? Android na to pýta práva „správcu zariadenia“, použijú sa len na zamknutie obrazovky.</string>
     <string name="dpad_key_ongoing_ok">Použije vybrané tlačidlo</string>
-    <string name="dpad_key_ongoing_green">Vypne displej (vypne sa aj sám 3 s po spojení); zelené alebo Späť ho zapne</string>
+    <string name="dpad_key_ongoing_green">Vypne displej (vypne sa aj sám 2 s po začatí hovoru); zelené alebo Späť ho zapne</string>
 </resources>

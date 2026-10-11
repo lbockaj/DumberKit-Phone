@@ -68,9 +68,9 @@
     <string name="dpad_ringing_silenced">Silenced · Back again hides the screen</string>
     <string name="dpad_key_incoming_red">Silence the ringing (Android does this with the red / power key)</string>
     <string name="dpad_touch_input">Allow touch input</string>
-    <string name="dpad_screen_off_admin_description">Turns the screen off during a call (3 seconds after it starts, and with the green key), so the ear can\'t touch anything; this phone has no proximity sensor. The app uses no other admin rights.</string>
+    <string name="dpad_screen_off_admin_description">Turns the screen off during a call (2 seconds after it starts, and with the green key), so the ear can\'t touch anything; this phone has no proximity sensor. The app uses no other admin rights.</string>
     <string name="dpad_screen_off_setting">Turn the screen off during calls</string>
-    <string name="dpad_screen_off_question">This phone has no proximity sensor, so during a call the screen stays on at the ear and the ear can pull down the status bar. Allow the app to turn the screen off during calls (3 seconds after the call starts, and with the green key)? Android asks for \"device admin\" rights for this, only to lock the screen.</string>
+    <string name="dpad_screen_off_question">This phone has no proximity sensor, so during a call the screen stays on at the ear and the ear can pull down the status bar. Allow the app to turn the screen off during calls (2 seconds after the call starts, and with the green key)? Android asks for \"device admin\" rights for this, only to lock the screen.</string>
     <string name="dpad_key_ongoing_ok">Use the selected button</string>
-    <string name="dpad_key_ongoing_green">Turn the screen off (it also goes off 3 s after the call starts); green or Back turns it on</string>
+    <string name="dpad_key_ongoing_green">Turn the screen off (it also goes off 2 s after the call starts); green or Back turns it on</string>
 </resources>

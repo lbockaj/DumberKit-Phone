@@ -50,7 +50,7 @@ class CallActivity : SimpleActivity() {
         private const val DIM_AFTER_MS = 10_000L
         private const val DIMMED_BRIGHTNESS = 0.05f
         private const val SHADE_CHECK_DELAY_MS = 150L
-        private const val SCREEN_OFF_AFTER_MS = 3_000L
+        private const val SCREEN_OFF_AFTER_MS = 2_000L
         private const val WAKE_KEY_GRACE_MS = 700L
 
         fun getStartIntent(context: Context): Intent {
@@ -296,6 +296,19 @@ class CallActivity : SimpleActivity() {
         WindowInsetsControllerCompat(window, window.decorView).apply {
             hide(WindowInsetsCompat.Type.statusBars())
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
+    /** Once per call: 2 s after it starts (dialing or answered) the display goes off, there's no proximity sensor. */
+    private fun scheduleScreenOff() {
+        // with a proximity sensor the display goes off at the ear by itself
+        if (hasProximitySensor()) {
+            return
+        }
+
+        if (!screenOffScheduled) {
+            screenOffScheduled = true
+            screenOffHandler.postDelayed({ turnScreenOff() }, SCREEN_OFF_AFTER_MS)
         }
     }
 
@@ -683,6 +696,8 @@ class CallActivity : SimpleActivity() {
     private fun initOutgoingCallUI() {
         enableProximitySensor()
         showOngoing()
+        // an outgoing call goes off already while it's dialing, an incoming one once it's answered (callStarted)
+        scheduleScreenOff()
     }
 
     private fun callRinging() = binding.apply {
@@ -695,11 +710,7 @@ class CallActivity : SimpleActivity() {
     private fun callStarted() {
         enableProximitySensor()
         showOngoing()
-        // once per call: 3 s after it starts the display goes off (no proximity sensor), the green key turns it on
-        if (!screenOffScheduled) {
-            screenOffScheduled = true
-            screenOffHandler.postDelayed({ turnScreenOff() }, SCREEN_OFF_AFTER_MS)
-        }
+        scheduleScreenOff()
         callDurationHandler.removeCallbacks(updateCallDurationTask)
         callDurationHandler.post(updateCallDurationTask)
     }

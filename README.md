@@ -93,8 +93,9 @@ instead: **← / →** pick one, **OK** uses it, and its name and state are show
 | **Call** (green key) | Turn the screen off; green or Back turns it on again |
 | **End** (red key) | Hang up – with the screen on and Android's *Power button ends call* switched on |
 
-Keypad phones have no proximity sensor, so the screen stays on at your ear. With *Turn the screen off during calls*
-the app switches it off 3 seconds after the call connects, and the ear can't touch anything. Android only lets apps
+Phones with a proximity sensor switch the screen off at your ear by themselves. Many keypad phones have no such
+sensor, so the screen stays on at your ear. With *Turn the screen off during calls*
+the app switches it off 2 seconds after the call starts (for an incoming call once it is answered), and the ear can't touch anything. Android only lets apps
 do that as a *device admin*: the app asks for it once, uses it for nothing else, and the switch in the settings
 removes it again. Without it the screen only dims after 10 seconds.
 
@@ -103,13 +104,15 @@ removes it again. Without it the screen only dims after 10 seconds.
 Every option is a row you can reach with the arrows, the lists open as dialogs with the current choice selected.
 
 - **Allow touch input** – off by default.
-- **Turn the screen off during calls** – the device admin described above.
+- **Turn the screen off during calls** – the device admin described above; only on phones without a proximity sensor.
 - The usual Fossify options: blocked numbers, date format, font size, name order, number formatting, tabs, grouping
   of subsequent calls, call confirmation, dialpad vibration and sounds (off by default), speed dial, exporting and
   importing the call history.
 - **Colors** – *System* (follows Android), light, dark and other themes; the app icon is green by default and any
   other color can be picked.
 - **About** – the version and the keys of every screen.
+- **Language** – on Android 13 and newer the app's own language can be picked; it comes in over 50 languages
+  from Fossify's translations, the keypad texts are in English and Slovak.
 
 ## Install
 
@@ -117,6 +120,10 @@ The app isn't released yet. Build it from source (see below) and install the APK
 **Phone** with the green icon and let it become the default phone app when Android asks.
 
 Requires Android 8.0 or newer.
+
+> **The green key on the home screen:** on many keypad phones the green Call key opens the phone app from the
+> launcher. If on your phone it doesn't open DumberKit Phone (nothing happens, or the old phone app opens), map the
+> Call key to open *Phone* with [Key Mapper](https://github.com/keymapperorg/KeyMapper) or a similar app.
 
 ## Build
 
