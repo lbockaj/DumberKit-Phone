@@ -1,7 +1,7 @@
 # Changelog
 
-## [0.1.0] - unreleased
-First version, based on Fossify Phone 1.11.1.
+## [1.0.0] - 2026-10-11
+First public release, based on Fossify Phone 1.11.1.
 
 ### Added
 - Call history, contacts and favorites as tabs switched with ← / →, the app starts on the call history with the

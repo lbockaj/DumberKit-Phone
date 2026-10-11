@@ -1,1 +1,1 @@
-First version: call history, contacts and favorites for the keys, dialing with T9 matches, incoming and ongoing call screens for keypad phones, screen off during calls.
+First public release: call history, contacts and favorites for the keys, dialing with T9 matches, incoming and ongoing call screens for keypad phones, the screen off during calls on phones without a proximity sensor.

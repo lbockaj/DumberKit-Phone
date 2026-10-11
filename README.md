@@ -116,8 +116,12 @@ Every option is a row you can reach with the arrows, the lists open as dialogs w
 
 ## Install
 
-The app isn't released yet. Build it from source (see below) and install the APK with `adb install`, then start
-**Phone** with the green icon and let it become the default phone app when Android asks.
+1. Download `dumberkit-phone.apk` from the [latest release](../../releases/latest).
+2. Open it on the phone and allow installing apps from that source when Android asks.
+3. Start **Phone** with the green icon, let it become the default phone app and allow access to the call history
+   and contacts.
+4. On phones without a proximity sensor allow *Turn the screen off during calls* when the app asks (it can also be
+   switched on later in the settings).
 
 Requires Android 8.0 or newer.
 
