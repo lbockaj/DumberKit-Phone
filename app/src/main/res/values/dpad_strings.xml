@@ -4,7 +4,7 @@
     <string name="dpad_pick_color">Color</string>
     <string name="dpad_pick_shade">Shade</string>
     <!-- about -->
-    <string name="dpad_about_app_name" translatable="false">DumberKit Phone</string>
+    <string name="dpad_about_app_name" translatable="false">DumberKit: Phone</string>
     <string name="dpad_about_version">Version %s</string>
     <string name="dpad_about_shortcuts">Keypad shortcuts</string>
     <string name="dpad_about_license_title">License</string>
