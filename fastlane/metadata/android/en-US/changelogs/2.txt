@@ -1,0 +1,4 @@
+• Fixed a crash right after the first start on DumberOS
+• An empty tab no longer traps the focus in the top bar
+• The selected dialog button is easier to see
+• No more "fake version" warnings

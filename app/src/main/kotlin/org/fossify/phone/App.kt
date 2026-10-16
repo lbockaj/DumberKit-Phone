@@ -38,6 +38,7 @@ import org.fossify.commons.views.MyAppBarLayout
 import org.fossify.phone.helpers.applyDpadFocusHighlight
 import org.fossify.phone.helpers.dpadCompactTopBar
 import org.fossify.phone.helpers.ignoreTouches
+import org.fossify.phone.helpers.removeModdedAppWarning
 
 // Commons' preference key of "On contact click"
 private const val ON_CONTACT_CLICK_KEY = "on_contact_click"
@@ -75,7 +76,10 @@ class App : FossifyApp() {
             }
 
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
-            override fun onActivityStarted(activity: Activity) {}
+            override fun onActivityStarted(activity: Activity) {
+                // shown by Commons in the screen's onCreate, see ModdedAppWarning.kt
+                activity.removeModdedAppWarning()
+            }
             override fun onActivityPaused(activity: Activity) {}
             override fun onActivityStopped(activity: Activity) {}
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}

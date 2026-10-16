@@ -150,7 +150,7 @@ fun SimpleActivity.handleFullScreenNotificationsPermission(callback: (granted: B
                     textId = R.string.allow_full_screen_notifications_incoming_calls,
                     positiveActionCallback = {
                         @SuppressLint("NewApi")
-                        openFullScreenIntentSettings(BuildConfig.APPLICATION_ID)
+                        openSettingsSafely { openFullScreenIntentSettings(BuildConfig.APPLICATION_ID) }
                     },
                     negativeActionCallback = {
                         callback(false)
@@ -162,7 +162,7 @@ fun SimpleActivity.handleFullScreenNotificationsPermission(callback: (granted: B
                 activity = this,
                 textId = R.string.allow_notifications_incoming_calls,
                 positiveActionCallback = {
-                    openNotificationSettings()
+                    openSettingsSafely { openNotificationSettings() }
                 },
                 negativeActionCallback = {
                     callback(false)

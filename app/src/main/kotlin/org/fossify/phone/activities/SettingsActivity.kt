@@ -106,7 +106,9 @@ class SettingsActivity : SimpleActivity() {
         refreshMenuItems()
 
         binding.apply {
-            setupEdgeToEdge(padBottomSystem = listOf(settingsNestedScrollview))
+            // a margin, not padding: Android's scroll views ignore their padding when they scroll to the focused row, the
+            // last rows ended up under the navigation bar
+            setupEdgeToEdge(moveBottomSystem = listOf(settingsNestedScrollview))
             setupMaterialScrollListener(binding.settingsNestedScrollview, binding.settingsAppbar)
         }
     }

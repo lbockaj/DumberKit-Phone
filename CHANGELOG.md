@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.1] - 2026-10-16
+### Fixed
+- The app crashed right after its first start on systems without Android's page for full-screen notifications
+  (DumberOS): the app's own settings page opens instead
+- An empty tab (cleared call history, no favorites) no longer traps the focus in the top bar, ← / → still switch the tabs
+- Clearing the call history could leave the cleared calls on screen until the app was reopened
+- The selected dialog button is much easier to see, also in the dark theme
+- The warning "You are using a fake version of the app", which Commons showed now and then, no longer shows up
+- On phones with an on-screen navigation bar the tabs and the last rows of the settings stay above it
+
 ## [1.0.0] - 2026-10-11
 First public release, based on Fossify Phone 1.11.1.
 

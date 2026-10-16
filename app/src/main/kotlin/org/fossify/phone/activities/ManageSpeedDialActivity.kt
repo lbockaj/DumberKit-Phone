@@ -31,7 +31,9 @@ class ManageSpeedDialActivity : SimpleActivity(), RemoveSpeedDialListener {
         setContentView(binding.root)
 
         binding.apply {
-            setupEdgeToEdge(padBottomSystem = listOf(manageSpeedDialScrollview))
+            // a margin, not padding: Android's scroll views ignore their padding when they scroll to the focused row, the
+            // last rows ended up under the navigation bar
+            setupEdgeToEdge(moveBottomSystem = listOf(manageSpeedDialScrollview))
             setupMaterialScrollListener(binding.manageSpeedDialScrollview, binding.manageSpeedDialAppbar)
 
         }

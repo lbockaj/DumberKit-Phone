@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.ContactsContract
+import android.provider.Settings
 import org.fossify.commons.extensions.isPackageInstalled
 import org.fossify.commons.extensions.launchActivityIntent
 import org.fossify.commons.extensions.showErrorToast
@@ -102,6 +103,21 @@ fun Activity.startActivityOnTop(intent: Intent) {
 }
 
 
+/**
+ * Some systems (DumberOS among them) leave out pages of the system settings, starting a missing one crashed the app
+ * right after its first start: the app's own settings page instead, where every permission can be found too.
+ */
+fun Activity.openSettingsSafely(open: () -> Unit) {
+    try {
+        open()
+    } catch (e: ActivityNotFoundException) {
+        try {
+            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)))
+        } catch (e: ActivityNotFoundException) {
+            toast(org.fossify.commons.R.string.no_app_found)
+        }
+    }
+}
 
 /** Android's own screen for the device admin of ScreenOffAdminReceiver (only "lock the screen"). */
 fun Activity.requestScreenOffAdmin() {

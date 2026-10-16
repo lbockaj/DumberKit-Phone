@@ -60,7 +60,9 @@ class DpadAboutActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setupEdgeToEdge(padBottomSystem = listOf(binding.aboutNestedScrollview))
+        // a margin, not padding: Android's scroll views ignore their padding when they scroll to the focused row, the
+        // last rows ended up under the navigation bar
+        setupEdgeToEdge(moveBottomSystem = listOf(binding.aboutNestedScrollview))
 
         binding.aboutVersion.text = getString(R.string.dpad_about_version, BuildConfig.VERSION_NAME)
         binding.aboutIcon.setImageDrawable(packageManager.getApplicationIcon(applicationInfo))

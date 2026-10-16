@@ -79,6 +79,7 @@ class RecentsFragment(
     override fun refreshItems(invalidate: Boolean, callback: (() -> Unit)?) {
         if (invalidate) {
             allRecentCalls = emptyList()
+            invalidations++
         }
 
         var shown = false
@@ -199,8 +200,20 @@ class RecentsFragment(
         }
     }
 
+    /**
+     * Counts the refreshes that started over (call history cleared). A refresh begun before one of them merges the
+     * calls it knew into its result, it would bring the deleted calls back, so its result is dropped.
+     */
+    @Volatile
+    private var invalidations = 0
+
     private fun refreshCallLog(loadAll: Boolean = false, onShown: (() -> Unit)? = null, callback: (() -> Unit)? = null) {
+        val started = invalidations
         getRecentCalls(loadAll, onCallsRead = { calls ->
+            if (started != invalidations) {
+                return@getRecentCalls
+            }
+
             // calls shown from the cache don't count, the fresh ones show up right away too
             // the first time the calls show up right away with the names the call log has, the names from the
             // contacts (a slow load with many contacts) fill in after
@@ -212,6 +225,9 @@ class RecentsFragment(
                 }
             }
         }) {
+            if (started != invalidations) {
+                return@getRecentCalls
+            }
             allRecentCalls = it
             if (!loadAll && searchQuery.isNullOrEmpty()) {
                 saveCachedCalls(it)

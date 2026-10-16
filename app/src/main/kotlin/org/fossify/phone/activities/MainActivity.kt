@@ -56,6 +56,7 @@ import org.fossify.phone.extensions.clearMissedCalls
 import org.fossify.phone.extensions.config
 import org.fossify.phone.extensions.isOwnDefaultDialer
 import org.fossify.phone.extensions.handleFullScreenNotificationsPermission
+import org.fossify.phone.extensions.openSettingsSafely
 import org.fossify.phone.extensions.launchCreateNewContactIntent
 import org.fossify.phone.extensions.startCallWithConfirmationCheck
 import org.fossify.phone.fragments.ContactsFragment
@@ -103,9 +104,10 @@ class MainActivity : SimpleActivity() {
         appLaunched(BuildConfig.APPLICATION_ID)
         setupToolbar()
         keepFocusInList()
+        // a margin, not padding: the tabs have a fixed height, padding squeezed them under the navigation bar
         setupEdgeToEdge(
             padTopSystem = listOf(binding.mainTopBar),
-            padBottomImeAndSystem = listOf(binding.mainTabsHolder),
+            moveBottomSystem = listOf(binding.mainTabsHolder),
         )
 
         EventBus.getDefault().register(this)
@@ -269,7 +271,9 @@ class MainActivity : SimpleActivity() {
                     positive = org.fossify.commons.R.string.ok,
                     negative = org.fossify.commons.R.string.cancel
                 ) {
-                    startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+                    openSettingsSafely {
+                        startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+                    }
                 }
             }
         }
@@ -498,6 +502,9 @@ class MainActivity : SimpleActivity() {
         binding.root.viewTreeObserver.addOnGlobalFocusChangeListener { _, newFocus ->
             val list = getCurrentFragment()?.getListView() ?: return@addOnGlobalFocusChangeListener
             val item = newFocus?.let { list.findContainingItemView(it) }
+            if (newFocus != null && newFocus != binding.viewPager) {
+                releaseEmptyTabFocus()
+            }
             when {
                 item != null -> lastListPosition = list.getChildAdapterPosition(item)
                 switchingTabs || allowLeavingList || newFocus == null || newFocus.isInside(binding.viewPager) -> lastListPosition = -1
@@ -509,8 +516,9 @@ class MainActivity : SimpleActivity() {
                         row.requestFocus()
                     } else {
                         list.post {
-                            if (!switchingTabs) {
-                                list.focusItem(position)
+                            // the rows are gone (call history cleared): the empty tab keeps the arrows working
+                            if (!switchingTabs && !list.focusItem(position) && getCurrentFragment()?.focusContent() != true) {
+                                holdFocusInEmptyTab()
                             }
                         }
                     }
@@ -612,6 +620,25 @@ class MainActivity : SimpleActivity() {
     /** Moves focus into the list of the visible tab, keeping [position] if given. */
     private fun focusCurrentList(position: Int = -1): Boolean = getCurrentFragment()?.focusContent(position) == true
 
+    /**
+     * An empty tab (no calls, no favorites) has nothing to focus: the pager holds the focus, without a frame, so ← / →
+     * still switch the tabs and ↑ goes to the top bar. On the top bar the arrows would only move between its buttons.
+     */
+    private fun holdFocusInEmptyTab() {
+        binding.viewPager.isFocusable = true
+        binding.viewPager.defaultFocusHighlightEnabled = false
+        binding.viewPager.descendantFocusability = ViewGroup.FOCUS_BEFORE_DESCENDANTS
+        binding.viewPager.requestFocus()
+    }
+
+    /** Back to normal once a row or the top bar has the focus again. */
+    private fun releaseEmptyTabFocus() {
+        if (binding.viewPager.isFocusable && !switchingTabs && !focusListOnStart) {
+            binding.viewPager.descendantFocusability = ViewGroup.FOCUS_AFTER_DESCENDANTS
+            binding.viewPager.isFocusable = false
+        }
+    }
+
     private fun focusTopBar() = moveFocusOutOfList {
         if (isSearchOpen) {
             binding.mainSearchInput.requestFocus()
@@ -675,7 +702,7 @@ class MainActivity : SimpleActivity() {
                 else -> {
                     done()
                     if (fragment?.focusContent(first) != true) {
-                        focusTopBar()
+                        holdFocusInEmptyTab()
                     }
                 }
             }
@@ -792,7 +819,15 @@ class MainActivity : SimpleActivity() {
 
             KeyEvent.KEYCODE_DPAD_DOWN -> {
                 if (inTopBar) {
-                    focusCurrentList()
+                    if (!focusCurrentList()) {
+                        holdFocusInEmptyTab()
+                    }
+                    return true
+                }
+
+                // the empty tab got its first row meanwhile (a call came in)
+                if (focused == binding.viewPager) {
+                    focusCurrentList(fragment?.firstItemPosition() ?: 0)
                     return true
                 }
 
@@ -1107,7 +1142,7 @@ class MainActivity : SimpleActivity() {
             } else {
                 startFocusDone()
                 if (fragment?.focusContent() != true) {
-                    focusTopBar()
+                    holdFocusInEmptyTab()
                 }
             }
         }, 50)
